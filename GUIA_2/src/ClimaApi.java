@@ -27,14 +27,11 @@ public class ClimaApi {
 	public List array[] = {tempMonday, tempTuesday, tempWednesday, tempThursday, tempFriday, tempSaturday, tempSunday};
 	
 	public ClimaApi() {
-		setDays();
+		
 	}
 	
-	private void setDays() {
-		int numberOfDay = 7;
-		for (int index = 0; index < numberOfDay; index++) { 
-			daysOfWeek.add(index, array[index]);
-		}
+	private void setDays(int idDay) { 
+		daysOfWeek.add(idDay, array[idDay]); 
 	}
 	
 	public void setTempsByIdOfDay(int idDay, double minTemp, double maxTemp) {
@@ -86,20 +83,63 @@ public class ClimaApi {
 		
 		return tempProm;
 	}
+	
+	public void showDaysByMinTemp() {
+		System.out.println("---- Dias cuya temperatura minima estan bajo 0 ----");
+		System.out.println("");
+
+		for (int day = 0; day < daysOfWeek.size(); day++) {
+			double min = daysOfWeek.get(day).get(0).get(0);
+			
+			for (int tempsOfDay = 0; tempsOfDay < daysOfWeek.get(day).size(); tempsOfDay++) { 
+
+				for (int temp = 0; temp < daysOfWeek.get(day).get(tempsOfDay).size(); temp++) {
+					if (temp == 0) {
+						
+						if (min > daysOfWeek.get(day).get(tempsOfDay).get(temp)) {
+							min = daysOfWeek.get(day).get(tempsOfDay).get(temp);
+						} 
+					}
+				} 
+			} 
+			
+			if (min < 0) { 
+				System.out.println("" + listNameDays[day] + ": temperatura minima registrada: " + min + " C ");
+			}
+		}	
+	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		ClimaApi app = new ClimaApi();
 		
+		app.setDays(0);
+		app.setDays(1);
+		app.setDays(2);
+		
 		app.setTempsByIdOfDay(0, 20, 30);
 		app.setTempsByIdOfDay(0, -25, 50);
 		app.setTempsByIdOfDay(0, 15, 20);
 		app.setTempsByIdOfDay(0, -15, 20);
+		
+		app.setTempsByIdOfDay(1, 30, 35);
+		app.setTempsByIdOfDay(1, -11, 30);
+		app.setTempsByIdOfDay(1, 30, 35);
+		app.setTempsByIdOfDay(1, -16, 24);
+
+		app.setTempsByIdOfDay(2, -20, 10); 
+		app.setTempsByIdOfDay(2, 15, 30); 
+		app.setTempsByIdOfDay(2, -5, 10); 
+		app.setTempsByIdOfDay(2, -4, 14);
 
 		app.getTempsByIdOfDays(0); 
+//		Double[] tempMinAndMax = app.getPromTempByIdOfDay(0);
+//		System.out.println("Temperatura Minima Prom: " + tempMinAndMax[0]);
+//		System.out.println("Temperatura Maxima Prom: " + tempMinAndMax[1]); 
+
+		app.getTempsByIdOfDays(1);
+		app.getTempsByIdOfDays(2);
 		
-		Double[] tempMinAndMax = app.getPromTempByIdOfDay(0);
-		System.out.println("Temperatura Minima Prom: " + tempMinAndMax[0]);
-		System.out.println("Temperatura Maxima Prom: " + tempMinAndMax[1]); 
+		app.showDaysByMinTemp();
 	} 
 }
