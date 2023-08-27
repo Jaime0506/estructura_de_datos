@@ -30,7 +30,7 @@ public class ClimaApi {
 		
 	}
 	
-	private void getTempsAllDays() {
+	public void getTempsAllDays() {
 		for (int i = 0; i < daysOfWeek.size(); i++) { 
 			List<List<Double>> day = daysOfWeek.get(i);
 			
@@ -49,11 +49,11 @@ public class ClimaApi {
 		}
 	}
 	
-	private void setDays(int idDay) { 
+	public void setDays(int idDay) { 
 		daysOfWeek.add(idDay, array[idDay]); 
 	}
 	
-	public void setTempsByIdOfDay(int idDay, double minTemp, double maxTemp) {
+	public void setTempsByIdOfDay(int idDay, double minTemp, double maxTemp) { 
 		List<Double> temp = new ArrayList<>(Arrays.asList(minTemp, maxTemp));
 		daysOfWeek.get(idDay).add(temp);
 	}
@@ -75,32 +75,35 @@ public class ClimaApi {
 		System.out.println("");
 	}
 	
-	public Double[] getPromTempByIdOfDay(int idDay) {
-		Double tempProm[] = new Double[2];
-		List<List<Double>> day = daysOfWeek.get(idDay);
-		
+	public void getPromTemp() { 
 		double min = 0;
 		double max = 0;
 		
-		for (int record = 0; record < day.size(); record++) {
-			for (int temp = 0; temp < day.get(record).size(); temp++) {
-				if (temp == 0) {
-					min += day.get(record).get(temp);
-				}
-				
-				if (temp == 1) {
-					max += day.get(record).get(temp);
+		System.out.println("---- Listado de temperatura promedio de cada dia ----");
+		System.out.println("");
+		for (int day = 0; day < daysOfWeek.size(); day++) { 
+			System.out.println("" + listNameDays[day]);
+			System.out.println("");
+
+			for (int record = 0; record < daysOfWeek.get(day).size(); record++) {
+				for (int temp = 0; temp < daysOfWeek.get(day).get(record).size(); temp++) {
+					if (temp == 0) {
+						min += daysOfWeek.get(day).get(record).get(temp);
+					}
+					
+					if (temp == 1) { 
+						max += daysOfWeek.get(day).get(record).get(temp);
+					}
 				}
 			}
-		}
-		
-		min = min / day.size();
-		max = max / day.size();
-		
-		tempProm[0] = min;
-		tempProm[1] = max;
-		
-		return tempProm;
+			
+			System.out.println("Minima promedio: " + min/daysOfWeek.get(day).size());
+			System.out.println("Maxima promedio: " + max/daysOfWeek.get(day).size());
+			System.out.println("");
+			
+			min = 0;
+			max = 0;
+		} 
 	}
 	
 	public void showDaysByMinTemp() {
