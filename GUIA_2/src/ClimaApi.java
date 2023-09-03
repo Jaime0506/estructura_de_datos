@@ -157,40 +157,4 @@ public class ClimaApi {
 		}	
 		System.out.println("");
 	} 
-
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		ClimaApi app = new ClimaApi();
-		
-		app.setDays(0);
-		app.setDays(1);
-		app.setDays(2);
-		
-		app.setTempsByIdOfDay(0, 20, 30);
-		app.setTempsByIdOfDay(0, -25, 50);
-		app.setTempsByIdOfDay(0, 15, 20);
-		app.setTempsByIdOfDay(0, -15, 20);
-		
-		app.setTempsByIdOfDay(1, 30, 35);
-		app.setTempsByIdOfDay(1, -11, 30);
-		app.setTempsByIdOfDay(1, 30, 35);
-		app.setTempsByIdOfDay(1, -16, 24);
-
-		app.setTempsByIdOfDay(2, -20, 10); 
-		app.setTempsByIdOfDay(2, 15, 30); 
-		app.setTempsByIdOfDay(2, -5, 10); 
-		app.setTempsByIdOfDay(2, -4, 14);
-
-//		app.getTempsByIdOfDays(0); 
-//		Double[] tempMinAndMax = app.getPromTempByIdOfDay(0);
-//		System.out.println("Temperatura Minima Prom: " + tempMinAndMax[0]);
-//		System.out.println("Temperatura Maxima Prom: " + tempMinAndMax[1]); 
-
-//		app.getTempsByIdOfDays(1);
-//		app.getTempsByIdOfDays(2);
-		app.getTempsAllDays();
-		
-		app.showDaysByMinTemp();
-		app.showDaysByMaxTemp();
-	} 
 }
