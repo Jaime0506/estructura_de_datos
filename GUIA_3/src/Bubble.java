@@ -1,11 +1,13 @@
+import java.util.Arrays;
 import java.util.Random;
 
 public class Bubble {
 
     public static void main(String[] args) {
         
-        int n = 1000; // You can change this to the desired array size.
-        int[] arr = generateRandomArray(n);
+//        int n = 1000; // You can change this to the desired array size.
+//        int[] arr = generateRandomArray(n);
+        int[] arr = {19, 1, 9, 7, 3, 10, 13, 15, 8, 12};
         long startTime = System.currentTimeMillis();
 
         bubbleSort(arr);
@@ -30,6 +32,16 @@ public class Bubble {
         int n = arr.length;
         boolean swapped;
         for (int i = 0; i < n - 1; i++) {
+        	System.out.println("pasada " + (i + 1));
+        	
+        	if (i == 2) {
+        		System.out.println(Arrays.toString(arr));
+        	}
+        	
+        	if (i == 3) {
+        		System.out.println(Arrays.toString(arr));
+        	}
+
             swapped = false;
             for (int j = 0; j < n - i - 1; j++) {
                 if (arr[j] > arr[j + 1]) {

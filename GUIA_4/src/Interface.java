@@ -106,12 +106,8 @@ public class Interface {
 					int numberToFind = Integer.parseInt(inputFind.getText()); 
 					String message = search.binarySearch(array.getArray(), numberToFind);
 					System.out.println("");
-					System.out.println(message);
-					
-//					System.out.println("La operacion de busqueda binaria tardo: " + timeEnd + " ms");
-					
-				} catch (Exception e2) {
-					// TODO: handle exception
+					System.out.println(message); 
+				} catch (Exception e2) { 
 					JOptionPane.showMessageDialog(frmBusquedaBinaria, "El valor ingresado no es un numero", "Error", JOptionPane.ERROR_MESSAGE);
 				}
 				inputFind.setText("");
