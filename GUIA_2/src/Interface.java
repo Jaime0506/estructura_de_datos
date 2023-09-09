@@ -95,6 +95,7 @@ public class Interface {
 		}
 
 		clima.setTempsByIdOfDay(day, valueMin, valueMax); 
+		
 		matriz.setRowCount(clima.daysOfWeek.get(day).size()); 
 		
 		for (int i = 0; i < clima.daysOfWeek.get(day).size(); i++) {
