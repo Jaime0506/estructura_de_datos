@@ -6,8 +6,11 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
+
+import javax.swing.JOptionPane;
 
 public class Abc {
 	int n = 100; 
@@ -45,7 +48,7 @@ public class Abc {
 		System.out.println("EMPLEADOS DE LA EMPRESA ABC"); 
 		System.out.println("----------------------------");
 		
-int i = 1;
+		int i = 1;
 		
 		for (Integer rut: employees.keySet()) {
 			float salario = employees.get(rut);
@@ -73,7 +76,7 @@ int i = 1;
 	public void showLinkedEmployees () {
 		
 		System.out.println("----------------------------");
-		System.out.println("EMPLEADOS DE LA EMPRESA ABC ORDENADOS"); 
+		System.out.println("EMPLEADOS DE LA EMPRESA ABC"); 
 		System.out.println("----------------------------"); 		
 		
 		int i = 1;
@@ -100,7 +103,7 @@ int i = 1;
 			
 			if (counter < 30) {
 				rutMax = rut;
-				float salario = employees.get(rut); 
+				float salario = linkedEmployees.get(rut); 
 				System.out.println("" + (counter + 1) + " " + rut + ": " + salario); 
 				counter++;
 			} else {
@@ -116,7 +119,9 @@ int i = 1;
 		
 		for (Integer rut: linkedEmployees.keySet()) { 
 			if (counter < 30) {
-				float salario = (float) (employees.get(rut) * 1.05); 
+				employees.put(rut, (float) (linkedEmployees.get(rut) * 1.05));
+
+				float salario = (float) (employees.get(rut)); 
 				System.out.println("" + (counter + 1) + " " + rut + ": " + salario); 
 				
 				counter++;
@@ -159,7 +164,25 @@ int i = 1;
 	}
 	
 	public void findEmployeesByRut (int rut) {
-		System.out.println(employees.get(rut));
+		
+		int counter = 0;
+		int position = -1;
+		
+		for (Entry<Integer, Float> entry : employees.entrySet()) {
+            if (entry.getKey().equals(rut)) {
+                position = counter;
+                break; // Detener el bucle una vez que se encuentra la clave
+            }
+
+            counter++;
+        }
+
+		if (position == -1) {
+			JOptionPane.showMessageDialog(null, "No se encontro ningun empleado con dicho rut", "Error", JOptionPane.ERROR_MESSAGE); 
+		} else {
+			JOptionPane.showMessageDialog(null, "Se encontro el empleado con rut: " + rut + " en la posicion: " + (position + 1) + " \n salario actual: " + employees.get(rut)); 
+		}
+//		System.out.println(employees.get(rut));
 	}
 	
 	public static void main(String[] args) {
