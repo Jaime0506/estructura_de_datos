@@ -24,4 +24,13 @@ public class CantanteFamoso {
 	public void setDisco(String nuevoDisco) {
 		discoConMasVentas = nuevoDisco;
 	}
+	
+	public int getVentas() {
+		return cantidadVentas;
+	}
+	
+	public void setVentas(int nuevasVentas) {
+		cantidadVentas = nuevasVentas;
+	}
 }
+
