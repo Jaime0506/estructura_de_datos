@@ -11,7 +11,7 @@ public class ListaCantantesFamosos {
 	}
 	
 	public void mostratCantante() {
-		for (Iterator iterator = listaCantantesFamosos.iterator(); iterator.hasNext();) {
+		for (Iterator<CantanteFamoso> iterator = listaCantantesFamosos.iterator(); iterator.hasNext();) {
 			CantanteFamoso cantanteFamoso = (CantanteFamoso) iterator.next();
 			
 			System.out.println(cantanteFamoso.getNombre() + ": " + cantanteFamoso.getDisco()); 
