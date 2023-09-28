@@ -45,6 +45,7 @@ public class UiCantantes {
 	/**
 	 * Initialize the contents of the frame.
 	 */
+	@SuppressWarnings("serial")
 	private void initialize() {
 		ListaCantantesFamosos app = new ListaCantantesFamosos();
 		
@@ -106,6 +107,8 @@ public class UiCantantes {
 		table.getColumnModel().getColumn(3).setResizable(false);
 		scrollPane.setViewportView(table);
 
+		DefaultTableModel tableData = (DefaultTableModel) table.getModel();
+
 		JButton btnNewButton = new JButton("Agregar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) { 
@@ -119,10 +122,7 @@ public class UiCantantes {
 					try {
 						int ventas_n = Integer.parseInt(ventas); 
 						
-						app.agregarCantanteFamoso(nombre, disco, ventas_n);
-						app.mostratCantantes();
-						
-						DefaultTableModel tableData = (DefaultTableModel) table.getModel();
+						app.agregarCantanteFamoso(nombre, disco, ventas_n); 
 						app.setValuesTable(tableData);
 						
 						// Limpio los campos agregados
@@ -152,7 +152,27 @@ public class UiCantantes {
 					String[] options = {"Nombre", "Disco mas ventas", "Ventas"};
 					int response = JOptionPane.showOptionDialog(frmCantantesFamosos, "Seleccione el valor a modificar", "Modificar cantante: " + app.listaCantantesFamosos.get(idCantante).getNombre(), 0, 3, null, options, options[0]);
 					
-					System.out.println(response);
+					switch (response) {
+						case 0: { 
+							String newName = JOptionPane.showInputDialog(frmCantantesFamosos, "Digite el nuevo nombre para el cantante");
+							app.listaCantantesFamosos.get(idCantante).setNombre(newName);
+							break;
+						}
+
+						case 1: {
+							String newDisco = JOptionPane.showInputDialog(frmCantantesFamosos, "Digite el nuevo nombre del disco");
+							app.listaCantantesFamosos.get(idCantante).setDisco(newDisco);
+							break;
+						}
+						
+						case 2: {
+							int newNumeroVentas = Integer.parseInt(JOptionPane.showInputDialog(frmCantantesFamosos, "Digite el nuevo valor de ventas del disco mas vendido"));
+							app.listaCantantesFamosos.get(idCantante).setVentas(newNumeroVentas);
+							break;
+						}
+					}
+
+					app.setValuesTable(tableData); 
 				} else {
 					JOptionPane.showMessageDialog(frmCantantesFamosos, "El Id de cantante solicitado no existe, favor verifique la informacion", "Error", JOptionPane.ERROR_MESSAGE);
 				}
@@ -161,8 +181,24 @@ public class UiCantantes {
 		btnNewButton_1.setBounds(499, 76, 119, 38);
 		frmCantantesFamosos.getContentPane().add(btnNewButton_1);
 		
-		JButton btnNewButton_1_1 = new JButton("Modificar");
+		JButton btnNewButton_1_1 = new JButton("Eliminar");
+		btnNewButton_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int idCantante = Integer.parseInt(JOptionPane.showInputDialog(frmCantantesFamosos, "Digite el ID del cantante famoso que quiere eliminar")); 
+				app.eliminarCantante(idCantante);
+				app.setValuesTable(tableData);
+			}
+		});
 		btnNewButton_1_1.setBounds(499, 120, 119, 38);
 		frmCantantesFamosos.getContentPane().add(btnNewButton_1_1);		
+		
+		JButton btnNewButton_2 = new JButton("MOSTRAR LISTA ORDENADA");
+		btnNewButton_2.addActionListener(new ActionListener() { 
+			public void actionPerformed(ActionEvent e) {
+				app.ordenarDeMayorAMenor();
+			}
+		});
+		btnNewButton_2.setBounds(163, 170, 455, 23);
+		frmCantantesFamosos.getContentPane().add(btnNewButton_2);
 	}
 }

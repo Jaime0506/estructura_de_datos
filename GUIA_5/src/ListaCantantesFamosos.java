@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -27,14 +28,19 @@ public class ListaCantantesFamosos {
 		listaCantantesFamosos.add(cantante);
 	}
 
-	public void mostratCantantes() {
-		for (Iterator<CantanteFamoso> iterator = listaCantantesFamosos.iterator(); iterator.hasNext();) {
+	private void mostratCantantes() {
+		System.out.println("-------------------------------");
+		System.out.println("-------Lista de cantantes------"); 
+		System.out.println("-------------------------------");
+
+		for (Iterator<CantanteFamoso> iterator = listaCantantesFamosos.iterator(); iterator.hasNext();) { 
 			CantanteFamoso cantanteFamoso = (CantanteFamoso) iterator.next();
 			
 			System.out.println();
 			System.out.println(cantanteFamoso.getNombre() + ": " + cantanteFamoso.getDisco() + " Ventas: "
 					+ cantanteFamoso.getVentas());
-		}
+		} 
+		System.out.println("-------------------------------");
 	}
 
 	public void modificarNombre(int id, String nuevoNombre) {
@@ -49,12 +55,13 @@ public class ListaCantantesFamosos {
 		try {
 			String message = "El cantante " + listaCantantesFamosos.get(id).getNombre()
 					+ " fue eliminado correctamente";
-			listaCantantesFamosos.remove(id);
-
+			
+			listaCantantesFamosos.remove(id); 
 			JOptionPane.showMessageDialog(null, message);
+
 		} catch (Exception e) {
 			// TODO: handle exception
-			JOptionPane.showMessageDialog(null, "El cantante a eliminar no se encontro");
+			JOptionPane.showMessageDialog(null, "El cantante a eliminar no se encontro", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	} 
 
@@ -84,5 +91,45 @@ public class ListaCantantesFamosos {
 				}
 			}
 		}
+		
+		mostratCantantes();
 	} 
+	
+	public void ordenarDeMayorAMenor() {
+		ArrayList<CantanteFamoso> listaOrdenada = new ArrayList<CantanteFamoso>(listaCantantesFamosos);
+		
+		selectionSort(listaOrdenada); 
+		
+		System.out.println("-----------------------------------");
+		System.out.println("----Lista de cantantes Ordenada----"); 
+		System.out.println("-----------------------------------");
+		
+		for (Iterator<CantanteFamoso> iterator = listaOrdenada.iterator(); iterator.hasNext();) {
+			CantanteFamoso cantanteFamoso = (CantanteFamoso) iterator.next();
+			
+			System.out.println();
+			System.out.println(cantanteFamoso.getNombre() + ": " + cantanteFamoso.getDisco() + " Ventas: "
+					+ cantanteFamoso.getVentas());
+		} 
+		System.out.println("-----------------------------------"); 
+	}
+	
+	private void selectionSort(ArrayList<CantanteFamoso> lista) {
+		int n = lista.size();
+
+        for (int i = 0; i < n - 1; i++) {
+            int maxIndex = i;
+
+            for (int j = i + 1; j < n; j++) {
+                if (lista.get(j).getVentas() > lista.get(maxIndex).getVentas()) {
+                    maxIndex = j;
+                }
+            }
+
+            // Intercambiar los elementos
+            CantanteFamoso temp = lista.get(maxIndex);
+            lista.set(maxIndex, lista.get(i));
+            lista.set(i, temp);
+        }
+	}
 }
