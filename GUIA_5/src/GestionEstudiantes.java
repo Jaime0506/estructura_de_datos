@@ -1,119 +1,149 @@
-import java.net.CookieHandler;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map.Entry;
+package Gestion;
 
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
+import java.util.HashMap;
+import java.util.Scanner;
 
 public class GestionEstudiantes {
-	public HashMap<Integer, Estudiante> estudiantes = new HashMap<Integer, Estudiante>();
 
-	public void addEstudiante(int id, String nombre, String apellido, String direccion, String telefono, String carrera,
-			JFrame frame, DefaultTableModel table) {
-		if (existeEstudiante(id)) {
-			JOptionPane.showMessageDialog(frame, "El estudiante con ese ID ya existe", "Error",
-					JOptionPane.ERROR_MESSAGE);
-		} else {
-			estudiantes.put(id, new Estudiante(nombre, apellido, direccion, telefono, carrera));
-			rellenarTabla(table);
-		}
-	}
+    public static void main(String[] args) {
 
-	public void deleteEstudiante(int id, JFrame frame, DefaultTableModel table) {
-		if (existeEstudiante(id)) { 
-			String message = "El estudiante " + estudiantes.get(id).obtenerNombre() + " de ID: " + id + "Fue eliminado exitosamente";
-			estudiantes.remove(id);
+        HashMap<Integer, Estudiantes> mapaEstudiantes = new HashMap<>();
+        Scanner entrada = new Scanner(System.in);
+        System.out.print("Ingrese la cantidad de estudiantes a registrar: ");
+        int cantidadEstudiantes = entrada.nextInt();
 
-			JOptionPane.showMessageDialog(frame, message); 
-			rellenarTabla(table);
-		} else {
-			JOptionPane.showMessageDialog(frame, "El estudiante con ese ID no existe", "Error",
-					JOptionPane.ERROR_MESSAGE);
-		}
-	}
+        for (int i = 1; i <= cantidadEstudiantes; i++) {
+            System.out.println();
+            System.out.println("Ingresando datos para el estudiante #" + i);
+            System.out.println();
+            Estudiantes estudiante = crearEstudiante(entrada);
+            insertarEstudiante(mapaEstudiantes, i, estudiante);
+            mapaEstudiantes.put(i, estudiante);
+        }
 
-	public void cambiarDatos(int id, String option, String valor, JFrame frame, DefaultTableModel table) {
-		if (existeEstudiante(id)) {
 
-			if (option == "Nombre") {
-				estudiantes.get(id).cambiarNombre(valor, frame);
-			}
+        while (true) {
+            System.out.println("\nMenú:");
+            System.out.println("1. Consultar estudiante");
+            System.out.println("2. Modificar estudiante");
+            System.out.println("3. Eliminar estudiante");
+            System.out.println("4. Mostrar todos los estudiantes");
+            System.out.println("5. Salir");
+            System.out.print("Seleccione una opción: ");
 
-			if (option == "Apellido") {
-				estudiantes.get(id).cambiarApellido(valor, frame);
-			}
+            int opcion = entrada.nextInt();
 
-			if (option == "Direccion") {
-				estudiantes.get(id).cambiarDireccion(valor, frame);
-			}
+            switch (opcion) {
+                case 1:
+                    System.out.println();
+                    consultarEstudiante(mapaEstudiantes, entrada);
+                    System.out.println();
+                    break;
+                case 2:
+                    System.out.println();
+                    modificarEstudiante(mapaEstudiantes, entrada);
+                    System.out.println();
+                    break;
+                case 3:
+                    System.out.println();
+                    eliminarEstudiante(mapaEstudiantes, entrada);
+                    System.out.println();
+                    break;
+                case 4:
+                    System.out.println();
+                    mostrarTodosLosEstudiantes(mapaEstudiantes);
+                    System.out.println();
+                    break;
+                case 5:
+                    System.out.println();
+                    System.out.println("Saliendo del programa.");
+                    System.exit(0);
+                default:
+                    System.out.println("Opción no válida. Intente nuevamente.");
+            }
+        }
+    }
 
-			if (option == "Telefono") {
-				estudiantes.get(id).cambiarTelefono(valor, frame);
-			}
+    private static Estudiantes crearEstudiante(Scanner entrada) {
+        Estudiantes estudiante = new Estudiantes();
 
-			if (option == "Carrera") {
-				estudiantes.get(id).cambiarCarrera(valor, frame);
-			}
-			
-			rellenarTabla(table);
+        System.out.print("Ingrese el nombre del estudiante:");
+        estudiante.setNombre(entrada.next());
 
-		} else {
-			JOptionPane.showMessageDialog(frame, "El estudiante con ese ID no existe", "Error",
-					JOptionPane.ERROR_MESSAGE);
-		}
-	}
+        System.out.print("Ingrese los apellidos del estudiante:");
+        estudiante.setApellidos(entrada.next());
 
-	private void rellenarTabla(DefaultTableModel table) {
-		// Limpiamos la tabla siempre al inicio
-		table.setRowCount(0);
+        System.out.print("Ingrese la dirección del estudiante:");
+        estudiante.setDireccion(entrada.next());
 
-		table.setRowCount(estudiantes.size());
-		int rows = 0;
+        System.out.print("Ingrese el teléfono del estudiante:");
+        estudiante.setTelefono(entrada.nextInt());
 
-		for (Entry<Integer, Estudiante> entry : estudiantes.entrySet()) { 
-			int key = entry.getKey();
+        System.out.print("Ingrese la carrera del estudiante:");
+        estudiante.setCarrera(entrada.next());
+        System.out.println();
 
-			for (int columns = 0; columns < 6; columns++) {
+        return estudiante;
+    }
 
-				//ID
-				if (columns == 0) {
-					table.setValueAt(key, rows, columns);
-				}
+  private static void insertarEstudiante(HashMap<Integer, Estudiantes> mapaEstudiantes, int clave, Estudiantes estudiante) {
+        mapaEstudiantes.put(clave, estudiante);
+        System.out.println("Estudiante insertado con éxito.");
+    }
 
-				// Nombre
-				if (columns == 1) {
-					table.setValueAt(estudiantes.get(key).obtenerNombre(), rows, columns);
-				}
+    private static void consultarEstudiante(HashMap<Integer, Estudiantes> mapaEstudiantes, Scanner entrada) {
+        System.out.println("Ingrese la clave del estudiante a consultar:");
+        int clave = entrada.nextInt();
 
-				// Apellida
-				if (columns == 2) {
-					table.setValueAt(estudiantes.get(key).obtenerApellido(), rows, columns);
-				}
+        if (mapaEstudiantes.containsKey(clave)) {
+            System.out.println("Datos del estudiante con clave " + clave + ":");
+            mostrarInformacion(mapaEstudiantes, clave);
+        } else {
+            System.out.println("No se encontró ningún estudiante con esa clave.");
+        }
+    }
 
-				// Direccion
-				if (columns == 3) {
-					table.setValueAt(estudiantes.get(key).obtenerDireccion(), rows, columns);
-				}
-				
-				// Telefono
-				if (columns == 4) {
-					table.setValueAt(estudiantes.get(key).obtenerTelefono(), rows, columns);
-				}
+    private static void modificarEstudiante(HashMap<Integer, Estudiantes> mapaEstudiantes, Scanner entrada) {
+        System.out.println("Ingrese la clave del estudiante a modificar:");
+        int clave = entrada.nextInt();
 
-				// Carrera
-				if (columns == 5) {
-					table.setValueAt(estudiantes.get(key).obtenerCarrera(), rows, columns);
-				}
-			} 
-			rows++;
-		}
-	}
+        if (mapaEstudiantes.containsKey(clave)) {
+            Estudiantes estudianteModificado = crearEstudiante(entrada);
+            mapaEstudiantes.put(clave, estudianteModificado);
+            System.out.println("Estudiante modificado con éxito.");
+        } else {
+            System.out.println("No se encontró ningún estudiante con esa clave.");
+        }
+    }
 
-	public boolean existeEstudiante(int id) {
-		boolean existe = estudiantes.containsKey(id);
+    private static void eliminarEstudiante(HashMap<Integer, Estudiantes> mapaEstudiantes, Scanner entrada) {
+        System.out.println("Ingrese la clave del estudiante a eliminar:");
+        int clave = entrada.nextInt();
 
-		return existe;
-	}
+        if (mapaEstudiantes.containsKey(clave)) {
+            mapaEstudiantes.remove(clave);
+            System.out.println("Estudiante eliminado con éxito.");
+        } else {
+            System.out.println("No se encontró ningún estudiante con esa clave.");
+        }
+    }
+
+    private static void mostrarInformacion(HashMap<Integer, Estudiantes> mapaEstudiantes, int clave) {
+        Estudiantes estudiante = mapaEstudiantes.get(clave);
+        System.out.println("Nombre: " + estudiante.getNombre());
+        System.out.println("Apellidos: " + estudiante.getApellidos());
+        System.out.println("Dirección: " + estudiante.getDireccion());
+        System.out.println("Teléfono: " + estudiante.getTelefono());
+        System.out.println("Carrera: " + estudiante.getCarrera());
+        System.out.println();
+    }
+    
+     private static void mostrarTodosLosEstudiantes(HashMap<Integer, Estudiantes> mapaEstudiantes) {
+        System.out.println("Lista de todos los estudiantes:");
+        for (int clave : mapaEstudiantes.keySet()) {
+            System.out.println("Clave: " + clave);
+            mostrarInformacion(mapaEstudiantes, clave);
+            System.out.println("------------------------");
+        }
+    }
 }
