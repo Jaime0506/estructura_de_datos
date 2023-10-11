@@ -1,6 +1,6 @@
 public class Test {
     public static void main(String[] args) {
-        CircularList list = new CircularList();
+CircularList list = new CircularList();
         
         // .add sin argumento agregar al final
         // .add  con argumento lo agrega en el index indicado
@@ -18,10 +18,12 @@ public class Test {
         list.add(3, 2);
         list.add(3);
         
-        list.remove();
-        list.remove(1);
-        list.remove(2);
+        
+        
+        list.add(5);
 
+        list.show();
+        list.order();
         list.show();
     }
 }
