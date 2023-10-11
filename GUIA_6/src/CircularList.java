@@ -1,7 +1,11 @@
+import java.util.Scanner;
+
 public class CircularList {
 	public Node init;
 	public Node end;
 	int size;
+
+	Scanner sc = new Scanner(System.in);
 
 	private void addInit(int value) {
 		if (init == null) {
@@ -99,25 +103,36 @@ public class CircularList {
 	}
 
 	public void order() {
+		// Burbuja
 		Node current = init;
+		boolean flag = false;
+
 		do {
-			Node min = current;
-			Node temp = current.link;
+			flag = false;
 
-			do {
-				if (temp.value < min.value) {
-					min = temp;
+			for (int i = 0; i < size() - 1; i++) {
+				Node next = current.link;
+
+				if (current.value > next.value) {
+					flag = true;
+					Node temp = new Node(current.value);
+
+					current.value = next.value;
+					next.value = temp.value;
 				}
-				temp = temp.link;
-			} while (temp != init);
+				current = current.link;
+			}
+			current = init;
+		} while (flag);
 
-			int tempValue = current.value;
-			current.value = min.value;
-			min.value = tempValue;
+		show();
+	}
 
-			current = current.link;
-		} while (current != init);
+	public void update(int index, int value) {
+		allValidations(index);
 
+		Node current = getNode(index);
+		current.value = value;
 	}
 
 	public String show() {
@@ -127,17 +142,15 @@ public class CircularList {
 			Node aux = init;
 
 			do {
-//                System.out.println(aux.value + "");
-
 				if (aux == end) {
 					message += aux.value;
 				} else {
 					message += aux.value + " -> ";
 				}
-
 				aux = aux.link;
 			} while (aux != init);
 		}
+
 		System.out.println(message);
 		return message;
 	}
@@ -157,15 +170,50 @@ public class CircularList {
 		return count;
 	}
 
-	public Node getNode(int index) {
+	public Node getNodeByIndex(int index) {
+		Node response = getNode(index);
+
+		if (response != null) {
+			System.out.println("El nodo fue encontrado en la posicion " + index);
+		} else {
+			System.out.println("No existe ningun nodo en la posicion " + index);
+		}
+		
+		return response;
+	}
+
+	public Node getNodeByValue(int value) {
+		Node aux = init;
+		int count = 0;
+
+		do {
+			if (aux.value == value) {
+				System.out.println("Se encontro el nodo en la posicion " + count);
+				return aux;
+			}
+			count++;
+			aux = aux.link;
+		} while (aux != init);
+
+		System.out.println("No se encontro el nodo con valor de " + value);
+		return null;
+	}
+
+	private Node getNode(int index) {
 		int count = 0;
 		Node aux = init;
 
-		while (count != index) {
-			aux = aux.link;
-		}
+		if (index < size()) {
+			
+			while (count != index) {
+				aux = aux.link;
+				count++;
+			}
 
-		return aux;
+			return aux;
+		}
+		
+		return null;
 	}
 
 	private void allValidations() {
