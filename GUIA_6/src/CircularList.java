@@ -1,5 +1,8 @@
 import java.util.Scanner;
 
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
 public class CircularList {
 	public Node init;
 	public Node end;
@@ -7,7 +10,7 @@ public class CircularList {
 
 	Scanner sc = new Scanner(System.in);
 
-	private void addInit(int value) {
+	public void addInit(int value) {
 		if (init == null) {
 			init = new Node(value);
 			init.link = init;
@@ -66,30 +69,44 @@ public class CircularList {
 	}
 
 	private void removeInit() {
-		end.link = init.link;
-		init = init.link;
+		if (size() == 1) {
+			init = null;
+		} else {
+			end.link = init.link;
+			init = init.link;
+		}
+
 	}
 
 	public void remove() {
 		allValidations();
 
-		Node aux = init;
+		if (size() == 1) {
+			init = null;
+		} else {
+			Node aux = init;
 
-		while (aux.link != end) {
-			aux = aux.link;
+			while (aux.link != end) {
+				aux = aux.link;
+			}
+
+			aux.link = end.link;
+			end = aux;
 		}
 
-		aux.link = end.link;
-		end = aux;
 	}
 
 	public void remove(int index) {
 		// int count = 0;
 		allValidations(index);
-		// Cuando el index es 0
-		if (index == 0) {
+
+		// Caso especial
+		if (size() == 1) {
+			init = null; 
+		} else if (index == 0) {
 			removeInit();
 		} else {
+			
 			int count = 0;
 			Node aux = init;
 
@@ -178,7 +195,7 @@ public class CircularList {
 		} else {
 			System.out.println("No existe ningun nodo en la posicion " + index);
 		}
-		
+
 		return response;
 	}
 
@@ -204,7 +221,7 @@ public class CircularList {
 		Node aux = init;
 
 		if (index < size()) {
-			
+
 			while (count != index) {
 				aux = aux.link;
 				count++;
@@ -212,14 +229,20 @@ public class CircularList {
 
 			return aux;
 		}
-		
+
 		return null;
+	}
+
+	public void setTextUi(JTextField text) {
+		text.setText("");
+		text.setText(show());
 	}
 
 	private void allValidations() {
 		// Validadicon de que exista elementos
 		if (size() == 0) {
-			throw new Error("la lista no tiene elementos para poder eliminar", null);
+			JOptionPane.showMessageDialog(null, "La lista no tiene elementos", "Error", JOptionPane.ERROR_MESSAGE);
+			throw new Error("la lista no tiene elementos", null);
 		}
 	}
 
@@ -227,6 +250,7 @@ public class CircularList {
 		allValidations();
 		// Validacion del size al realizar alguna operacion con index
 		if (index >= size()) {
+			JOptionPane.showMessageDialog(null, "Index fuera de rango", "Error", JOptionPane.ERROR_MESSAGE);
 			throw new Error("index fuera de rango", null);
 		}
 	}
