@@ -1,3 +1,4 @@
+package circularList;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -48,12 +49,12 @@ public class UiCircularList {
 		frmListaCircular = new JFrame();
 		frmListaCircular.getContentPane().setBackground(new Color(192, 192, 192));
 		frmListaCircular.setTitle("LISTA CIRCULAR");
-		frmListaCircular.setBounds(100, 100, 589, 410);
+		frmListaCircular.setBounds(100, 100, 589, 430);
 		frmListaCircular.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmListaCircular.getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(23, 23, 525, 222);
+		panel.setBounds(23, 23, 525, 202);
 		frmListaCircular.getContentPane().add(panel);
 		panel.setLayout(null);
 		
@@ -64,7 +65,7 @@ public class UiCircularList {
 		
 		textFieldList = new JTextField();
 		textFieldList.setEditable(false);
-		textFieldList.setBounds(20, 36, 484, 164);
+		textFieldList.setBounds(20, 36, 484, 143);
 		panel.add(textFieldList);
 		textFieldList.setColumns(10);
 		
@@ -96,11 +97,20 @@ public class UiCircularList {
 				list.setTextUi(textFieldList);
 			}
 		});
-		btnNewButton.setBounds(23, 267, 250, 35);
+		btnNewButton.setBounds(23, 241, 250, 35);
 		frmListaCircular.getContentPane().add(btnNewButton);
 		
-		JButton btnModificar = new JButton("MODIFICAR");
-		btnModificar.setBounds(23, 313, 250, 35);
+		JButton btnModificar = new JButton("ACTUALIZAR");
+		btnModificar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int index = Integer.parseInt(JOptionPane.showInputDialog(frmListaCircular, "Digite el index del nodo que desea actualizar su valor"));
+				int value = Integer.parseInt(JOptionPane.showInputDialog(frmListaCircular, "Digite el valor nuevo del nodo"));
+				
+				list.update(index, value);
+				list.setTextUi(textFieldList);
+			}
+		});
+		btnModificar.setBounds(23, 287, 250, 35);
 		frmListaCircular.getContentPane().add(btnModificar);
 		
 		JButton btnNewButton_1_1 = new JButton("ELIMINAR");
@@ -127,11 +137,54 @@ public class UiCircularList {
 				list.setTextUi(textFieldList);
 			}
 		});
-		btnNewButton_1_1.setBounds(298, 267, 250, 35);
+		btnNewButton_1_1.setBounds(298, 241, 250, 35);
 		frmListaCircular.getContentPane().add(btnNewButton_1_1);
 		
 		JButton btnNewButton_1_1_1 = new JButton("ORDENAR");
-		btnNewButton_1_1_1.setBounds(298, 313, 250, 35);
+		btnNewButton_1_1_1.addActionListener(new ActionListener() { 
+			public void actionPerformed(ActionEvent e) {
+				list.order();
+				list.setTextUi(textFieldList);
+			}
+		});
+		btnNewButton_1_1_1.setBounds(298, 287, 250, 35);
 		frmListaCircular.getContentPane().add(btnNewButton_1_1_1);
+		
+		JButton btnObtener = new JButton("BUSCAR");
+		btnObtener.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String[] options = {"Buscar por indice", "Buscar por valor"};
+				
+				int response = JOptionPane.showOptionDialog(frmListaCircular, "Seleccione la manera que desea hacer la busqueda", "Busqueda", 0, 1, null, options, options[0]);
+				
+				if (response != -1) {
+					if (response == 0) {
+						int index = Integer.parseInt(JOptionPane.showInputDialog(frmListaCircular, "Digite la posicion del nodo que desea buscar"));
+						
+						if (index > 0) { 
+							list.getNodeByIndex(index);
+						} else {
+							JOptionPane.showMessageDialog(frmListaCircular, "El indice indicado no existe", "Error", JOptionPane.ERROR_MESSAGE);
+						}
+					}
+					if (response == 1) {
+						int value = Integer.parseInt(JOptionPane.showInputDialog(frmListaCircular, "Digite el valor del nodo que desea buscar"));
+						
+						list.getNodeByValue(value);
+					}
+				}
+			}
+		});
+		btnObtener.setBounds(23, 337, 250, 35);
+		frmListaCircular.getContentPane().add(btnObtener);
+		
+		JButton btnTamao = new JButton("TAMAÑO");
+		btnTamao.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) { 
+				JOptionPane.showMessageDialog(frmListaCircular, "El tamaño de la lista circualr es " + list.size());
+			}
+		});
+		btnTamao.setBounds(298, 337, 250, 35);
+		frmListaCircular.getContentPane().add(btnTamao);
 	}
 }

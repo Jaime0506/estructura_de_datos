@@ -1,3 +1,4 @@
+package circularList;
 import java.util.Scanner;
 
 import javax.swing.JOptionPane;
@@ -120,6 +121,7 @@ public class CircularList {
 	}
 
 	public void order() {
+		allValidations();
 		// Burbuja
 		Node current = init;
 		boolean flag = false;
@@ -149,7 +151,10 @@ public class CircularList {
 		allValidations(index);
 
 		Node current = getNode(index);
-		current.value = value;
+		
+		if (current != null) { 
+			current.value = value;
+		}
 	}
 
 	public String show() {
@@ -183,7 +188,8 @@ public class CircularList {
 				aux = aux.link;
 			} while (aux != init);
 		}
-
+		size = count;
+		
 		return count;
 	}
 
@@ -191,9 +197,9 @@ public class CircularList {
 		Node response = getNode(index);
 
 		if (response != null) {
-			System.out.println("El nodo fue encontrado en la posicion " + index);
+			JOptionPane.showMessageDialog(null, "El nodo fue encontrado en la posicion " + index + " con valor de: " + response.value); 
 		} else {
-			System.out.println("No existe ningun nodo en la posicion " + index);
+			JOptionPane.showMessageDialog(null, "No existe ningun nodo en la posicion " + index, "No encontrado", JOptionPane.WARNING_MESSAGE);
 		}
 
 		return response;
@@ -204,15 +210,15 @@ public class CircularList {
 		int count = 0;
 
 		do {
-			if (aux.value == value) {
-				System.out.println("Se encontro el nodo en la posicion " + count);
+			if (aux.value == value) { 
+				JOptionPane.showMessageDialog(null, "Se encontro el nodo en la posicion " + count);
 				return aux;
 			}
 			count++;
 			aux = aux.link;
 		} while (aux != init);
 
-		System.out.println("No se encontro el nodo con valor de " + value);
+		JOptionPane.showMessageDialog(null, "No existe ningun nodo con valor " + value, "No encontrado", JOptionPane.WARNING_MESSAGE);;
 		return null;
 	}
 
