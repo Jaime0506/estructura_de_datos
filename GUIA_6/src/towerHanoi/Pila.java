@@ -2,14 +2,14 @@ package towerHanoi;
 
 public class Pila {
 	private Node head;
-	private int countNode = 0;
+	private int size = 0;
 	
 	public Pila() {
 		head = null;
 	}
 	
-	public int getCountNode() {
-		return countNode;
+	public int size() {
+		return size;
 	}
 	
 	public void print() {
@@ -22,7 +22,7 @@ public class Pila {
 	}
 	
 	public void push(String value) {
-		countNode++;
+		size++;
 		
 		if (head == null) {
 			Node temp = new Node(value);
@@ -40,8 +40,8 @@ public class Pila {
 	}
 	
 	public void pop() {
-		if (countNode > 0) {
-			countNode--;
+		if (size > 0) {
+			size--;
 			if (head.getDown() != null) {
 				head = head.getDown();
 				head.setUp(null);
