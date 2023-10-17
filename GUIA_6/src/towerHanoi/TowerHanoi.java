@@ -82,10 +82,6 @@ public class TowerHanoi {
 		return null;
 	}
 
-//	private void cleanGame() {
-//		// Resetea el contador del numero de elementos y el numMinMov
-//	}
-
 	private void resetGame() {
 		// Validar de que el juego este iniciado para reiniciar
 		startGame();
@@ -221,6 +217,7 @@ public class TowerHanoi {
 
 		String disco = "";
 		numberOfMoves = 0;
+		
 		for (int x = objetivo; x >= 1; x--) {
 			for (int y = x; y > 0; y--) {
 				disco += "#";
