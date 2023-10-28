@@ -65,6 +65,10 @@ public class TreeFrame extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
+		JLabel lblMessage = new JLabel("");
+		lblMessage.setBounds(749, 11, 319, 223);
+		panel.add(lblMessage);
+		
 		JButton btnNewButton = new JButton("INSERTAR NODO");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -72,11 +76,9 @@ public class TreeFrame extends JFrame {
 					int value = Integer.parseInt(JOptionPane.showInputDialog(contentPane, "Seleccione el valor del nuevo nodo"));
 					tree.add(value); 
 					canvas.setTree(tree);
-					canvas.repaint();
-					
+					canvas.repaint(); 
 				} catch (Exception e2) {
-					// TODO: handle exception
-					
+					// TODO: handle exception 
 					JOptionPane.showMessageDialog(contentPane, "El valor ingresado no es numerico", "Error", JOptionPane.ERROR_MESSAGE, null);
 				} 
 			}
@@ -84,28 +86,65 @@ public class TreeFrame extends JFrame {
 		btnNewButton.setBounds(10, 11, 347, 58);
 		panel.add(btnNewButton);
 		
-		JButton btnBuscarNodo = new JButton("BUSCAR NODO");
+		JButton btnBuscarNodo = new JButton("ELIMINAR NODO");
+		btnBuscarNodo.addActionListener(new ActionListener() { 
+			public void actionPerformed(ActionEvent e) {
+				try {
+					int value = Integer.parseInt(JOptionPane.showInputDialog(contentPane, "Indique el valor del nodo a eliminar"));
+					tree.deleteNodeByValue(value);
+					canvas.setTree(tree);
+					canvas.repaint();
+				} catch (Exception e2) {
+					// TODO: handle exception
+					JOptionPane.showMessageDialog(contentPane, "El valor ingresado no es numerico", "Error", JOptionPane.ERROR_MESSAGE, null);
+				}
+			}
+		});
 		btnBuscarNodo.setBounds(10, 92, 347, 58);
 		panel.add(btnBuscarNodo);
 		
 		JButton btnBuscarNodo_1 = new JButton("BUSCAR NODO");
+		btnBuscarNodo_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					int value = Integer.parseInt(JOptionPane.showInputDialog(contentPane, "Indique el valor del nodo a buscar"));
+					tree.findNodeByValue(value); 
+				} catch (Exception e2) {
+					// TODO: handle exception
+					JOptionPane.showMessageDialog(contentPane, "El valor ingresado no es numerico", "Error", JOptionPane.ERROR_MESSAGE, null);
+				}
+			}
+		});
 		btnBuscarNodo_1.setBounds(10, 176, 347, 58);
 		panel.add(btnBuscarNodo_1);
 		
 		JButton btnInorden = new JButton("IN_ORDEN");
+		btnInorden.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lblMessage.setText(tree.in_order());
+			}
+		});
 		btnInorden.setBounds(386, 11, 347, 58);
 		panel.add(btnInorden);
 		
 		JButton btnPreorden = new JButton("PRE_ORDEN");
+		btnPreorden.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lblMessage.setText(tree.pre_order()); 
+			}
+		});
 		btnPreorden.setBounds(386, 92, 347, 58);
 		panel.add(btnPreorden);
 		
 		JButton btnPostorden = new JButton("POST_ORDEN");
+		btnPostorden.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lblMessage.setText(tree.post_order());
+			}
+		});
 		btnPostorden.setBounds(386, 176, 347, 58);
 		panel.add(btnPostorden);
 		
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setBounds(749, 11, 319, 223);
-		panel.add(lblNewLabel);
+		
 	}
 }

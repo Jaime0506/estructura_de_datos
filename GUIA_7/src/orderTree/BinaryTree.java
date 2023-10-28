@@ -1,5 +1,7 @@
 package orderTree;
 
+import javax.swing.JOptionPane;
+
 public class BinaryTree {
     Node root;
 
@@ -37,39 +39,48 @@ public class BinaryTree {
         return current; 
     }
 
-    public void in_order() {
-        in_order(root);
+    public String in_order() { 
+    	StringBuilder message = new StringBuilder();
+        in_order(root, message);
+
+        return message.toString();
     }
 
-    private void in_order(Node current) {
+    private void in_order(Node current, StringBuilder message) { 
         if (current != null) {
-            in_order(current.childLeft);
-            System.out.println(current.value);
-            in_order(current.childRight);
+            in_order(current.childLeft, message);
+            message.append(current.value).append("->");
+            in_order(current.childRight, message);
+        } 
+    }
+
+    public String pre_order() {
+    	StringBuilder message = new StringBuilder(); 
+        pre_order(root, message);
+        
+        return message.toString();
+    }
+
+    private void pre_order(Node current, StringBuilder message) {
+        if (current != null) {
+            message.append(current.value).append("->");
+            pre_order(current.childLeft, message);
+            pre_order(current.childRight, message);
         }
     }
 
-    public void pre_order() {
-        pre_order(root);
+    public String post_order() {
+    	StringBuilder message = new StringBuilder(); 
+        post_order(root, message);
+        
+        return message.toString();
     }
 
-    private void pre_order(Node current) {
+    private void post_order(Node current, StringBuilder message) {
         if (current != null) {
-            System.out.println(current.value);
-            pre_order(current.childLeft);
-            pre_order(current.childRight);
-        }
-    }
-
-    public void post_order() {
-        post_order(root);
-    }
-
-    private void post_order(Node current) {
-        if (current != null) {
-            post_order(current.childLeft);
-            post_order(current.childRight);
-            System.out.println(current.value);
+            post_order(current.childLeft, message);
+            post_order(current.childRight, message);
+            message.append(current.value).append("->");
         }
     }
 
@@ -78,9 +89,11 @@ public class BinaryTree {
 
         if (current == null) {
             System.out.println("El nodo a buscar no existe dentro del arbol");
+            JOptionPane.showMessageDialog(null, "El nodo a buscar no existe dentro del arbol", null, JOptionPane.ERROR_MESSAGE, null);
         } else {
             System.out.println("El nodo ha sido encontrado con valor de " + (current.value));
             current.getChildrends();
+            JOptionPane.showMessageDialog(null, "El nodo ha sido encontrado con valor de " + (current.value) + "\n " + current.getChildrends(), null, JOptionPane.YES_NO_CANCEL_OPTION, null);
         }
         
         return current;
@@ -203,7 +216,5 @@ public class BinaryTree {
         }
 
         return current;
-    }
-
-    
+    } 
 }

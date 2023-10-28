@@ -10,13 +10,17 @@ public class Node {
 		childRight = null;
 	} 
 
-	public void getChildrends() {
+	public String getChildrends() {
+		String message = "";
+		
 		if (childLeft != null) {
-			System.out.println("con un hijo izquierdo: " + (childLeft.value));
+			message += ("con un hijo izquierdo: " + (childLeft.value) + " ");
 		}
 
 		if (childRight != null) {
-			System.out.println("con un hijo derecho: " + (childRight.value));
+			message += ("con un hijo derecho: " + (childRight.value) + " ");
 		}
+		
+		return message;
 	}
 }
