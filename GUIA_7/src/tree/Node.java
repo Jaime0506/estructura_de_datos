@@ -1,14 +1,13 @@
 package tree;
 
-public class Node {
-	public Object value;
-	public Node childLeft, childRight;
-	public int countChildrens;
-	
-	public Node(Object value) {
-		this.value = value;
-		childLeft = null;
-		childRight = null;
-		countChildrens = 0;
-	} 
+class Node<T> {
+    T data;
+    Node<T> left;
+    Node<T> right;
+
+    public Node(T data) {
+        this.data = data;
+        this.left = null;
+        this.right = null;
+    }
 }
