@@ -16,10 +16,10 @@ import javax.swing.JOptionPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class TreeFrameString extends JFrame {
+public class TreeFrameNumbers extends JFrame {
 
 	private JPanel contentPane;
-	BinaryTree<String> tree = new BinaryTree<String>();
+	BinaryTree<Integer> tree = new BinaryTree<Integer>();
 
 	/**
 	 * Launch the application.
@@ -27,7 +27,7 @@ public class TreeFrameString extends JFrame {
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				try {
+				try { 
 					TreeFrameString frame = new TreeFrameString();
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -40,8 +40,8 @@ public class TreeFrameString extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TreeFrameString() {
-		setTitle("BinaryTree Strings");
+	public TreeFrameNumbers(){
+		setTitle("BinaryTree Numbers");
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1114, 920);
@@ -74,19 +74,16 @@ public class TreeFrameString extends JFrame {
 		JButton btnNewButton = new JButton("INSERTAR NODO");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String value = JOptionPane.showInputDialog(contentPane, "Seleccione el valor del nuevo nodo");
 				try {
-					Integer.parseInt(value);
-					// Si no salta el catch es porque efectivamente pudo cambiar el String a Int
-					// es decir, se digito un Numero
+					int value = Integer.parseInt(JOptionPane.showInputDialog(contentPane, "Seleccione el valor del nuevo nodo"));
 
-					JOptionPane.showMessageDialog(contentPane,
-							"El valor ingresado es numerico, por favor indique unicamente Texto");
-				} catch (Exception e2) {
-					// TODO: handle exception
 					tree.add(value);
 					canvas.setTree(tree);
-					canvas.repaint();
+					canvas.repaint(); 
+				} catch (Exception e2) {
+					// TODO: handle exception
+					JOptionPane.showMessageDialog(contentPane,
+							"El valor ingresado es texto, por favor indique unicamente Numerico");
 				}
 			}
 		});
@@ -96,17 +93,17 @@ public class TreeFrameString extends JFrame {
 		JButton btnBuscarNodo = new JButton("ELIMINAR NODO");
 		btnBuscarNodo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String value = (JOptionPane.showInputDialog(contentPane, "Indique el valor del nodo a eliminar"));
-				try {
-					Integer.parseInt(value);
-					JOptionPane.showMessageDialog(contentPane,
-							"El valor ingresado es numerico, por favor indique unicamente Texto");
+				try { 
+					int value = Integer.parseInt((JOptionPane.showInputDialog(contentPane, "Indique el valor del nodo a eliminar")));
 
-				} catch (Exception e2) {
-					// TODO: handle exception
 					tree.deleteNode(value);
 					canvas.setTree(tree);
 					canvas.repaint();
+
+				} catch (Exception e2) {
+					// TODO: handle exception
+					JOptionPane.showMessageDialog(contentPane,
+							"El valor ingresado es numerico, por favor indique unicamente Texto");
 				}
 			}
 		});
@@ -115,17 +112,10 @@ public class TreeFrameString extends JFrame {
 
 		JButton btnBuscarNodo_1 = new JButton("BUSCAR NODO (AMPLITUD)");
 		btnBuscarNodo_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				String value = (JOptionPane.showInputDialog(contentPane, "Indique el valor del nodo a buscar"));
-				
+			public void actionPerformed(ActionEvent e) { 
 				try {
-					Integer.parseInt(value);
-					JOptionPane.showMessageDialog(contentPane,
-							"El valor ingresado es numerico, por favor indique unicamente Texto");
-
-				} catch (Exception e2) {
-					// TODO: handle exception
+					int value = Integer.parseInt((JOptionPane.showInputDialog(contentPane, "Indique el valor del nodo a buscar")));
+					
 					boolean node = tree.breadthFirstSearch(value);
 					
 					if (node) { 
@@ -133,6 +123,11 @@ public class TreeFrameString extends JFrame {
 					} else {
 						JOptionPane.showMessageDialog(contentPane, "El nodo no existe dentro del arbol", "Error", JOptionPane.ERROR_MESSAGE);
 					}
+
+				} catch (Exception e2) {
+					// TODO: handle exception
+					JOptionPane.showMessageDialog(contentPane,
+							"El valor ingresado es numerico, por favor indique unicamente Texto");
 				}
 			}
 		});
@@ -178,15 +173,10 @@ public class TreeFrameString extends JFrame {
 		JButton btnInorden_1_1 = new JButton("NIVEL DE UN NODO");
 		btnInorden_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String value = JOptionPane.showInputDialog(contentPane, "Digite el valor del nodo al que desea encontrar su nivel");
 				
-				try {
-					Integer.parseInt(value);
-					JOptionPane.showMessageDialog(contentPane,
-							"El valor ingresado es numerico, por favor indique unicamente Texto");
+				try { 
+					int value = Integer.parseInt(JOptionPane.showInputDialog(contentPane, "Digite el valor del nodo al que desea encontrar su nivel"));
 
-				} catch (Exception e2) {
-					// TODO: handle exception
 					int response = tree.getLevel(value);
 					
 					if (response != -1) {
@@ -194,6 +184,10 @@ public class TreeFrameString extends JFrame {
 					} else { 
 						JOptionPane.showMessageDialog(contentPane, "El nodo no existe dentro del arbol", "Error", JOptionPane.ERROR_MESSAGE);
 					}
+				} catch (Exception e2) {
+					// TODO: handle exception
+					JOptionPane.showMessageDialog(contentPane,
+							"El valor ingresado es numerico, por favor indique unicamente Texto");
 				}
 				
 			}

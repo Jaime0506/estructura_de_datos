@@ -18,14 +18,19 @@ class BinaryTree<T extends Comparable<T>> {
 			return;
 		}
 
-		String[] options = {"Izquierda", "Derecha"};
-		int choice = JOptionPane.showOptionDialog(null, "Dónde desea agregar el nuevo nodo?", "Agregar Nodo",
-				JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+		if (!breadthFirstSearch(data)) {
+			String[] options = { "Izquierda", "Derecha" };
+			int choice = JOptionPane.showOptionDialog(null, "Dónde desea agregar el nuevo nodo?", "Agregar Nodo",
+					JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 
-		if (choice == 0) {
-			add(root, data, true);
+			if (choice == 0) {
+				add(root, data, true);
+			} else {
+				add(root, data, false);
+			}
+
 		} else {
-			add(root, data, false);
+			JOptionPane.showMessageDialog(null, "El nodo a insertar ya existe dentro del arbol");
 		}
 	}
 
@@ -63,45 +68,92 @@ class BinaryTree<T extends Comparable<T>> {
 		}
 	}
 
-	private Node<T> findNode(Node<T> currentNode, String nodeName) {
-		if (currentNode == null) {
-			return null;
+	public void deleteNode(T data) {
+		root = deleteNode(root, data);
+	}
+
+	private Node<T> deleteNode(Node<T> root, T data) {
+		if (root == null) {
+			return root; // El árbol está vacío o el nodo no se encontró
 		}
 
-		if (currentNode.data.toString().equalsIgnoreCase(nodeName)) {
-			return currentNode;
+		// Buscar el nodo que se debe eliminar
+		if (data.equals(root.data)) {
+			// Caso 1: Nodo sin hijos
+			if (root.left == null && root.right == null) {
+				return null;
+			}
+			// Caso 2: Nodo con un hijo
+			if (root.left == null) {
+				return root.right;
+			}
+			if (root.right == null) {
+				return root.left;
+			}
+			// Caso 3: Nodo con dos hijos
+			T minValue = findMinValue(root.right);
+			root.data = minValue;
+			root.right = deleteNode(root.right, minValue);
+
+		} else {
+			root.left = deleteNode(root.left, data);
+			root.right = deleteNode(root.right, data);
 		}
 
-		Node<T> leftResult = findNode(currentNode.left, nodeName);
-		if (leftResult != null) {
-			return leftResult;
+		return root;
+	}
+
+	private T findMinValue(Node<T> node) {
+		T minValue = node.data;
+		while (node.left != null) {
+			minValue = node.left.data;
+			node = node.left;
 		}
+		return minValue;
+	}
 
-		Node<T> rightResult = findNode(currentNode.right, nodeName);
-		return rightResult;
-	} 
+	public String in_order() {
+		StringBuilder message = new StringBuilder();
+		in_order(root, message);
 
-	public void inOrderTraversal(Node<T> node) {
+		return message.toString();
+	}
+
+	private void in_order(Node<T> node, StringBuilder message) {
 		if (node != null) {
-			inOrderTraversal(node.left);
-			System.out.print(node.data + " ");
-			inOrderTraversal(node.right);
+			in_order(node.left, message);
+			message.append(node.data).append("->");
+			in_order(node.right, message);
 		}
 	}
 
-	public void preOrderTraversal(Node<T> node) {
+	public String pre_order() {
+		StringBuilder message = new StringBuilder();
+		pre_order(root, message);
+
+		return message.toString();
+	}
+
+	private void pre_order(Node<T> node, StringBuilder message) {
 		if (node != null) {
-			System.out.print(node.data + " ");
-			preOrderTraversal(node.left);
-			preOrderTraversal(node.right);
+			message.append(node.data).append("->");
+			pre_order(node.left, message);
+			pre_order(node.right, message);
 		}
 	}
 
-	public void postOrderTraversal(Node<T> node) {
+	public String post_order() {
+		StringBuilder message = new StringBuilder();
+		post_order(root, message);
+
+		return message.toString();
+	}
+
+	public void post_order(Node<T> node, StringBuilder message) {
 		if (node != null) {
-			postOrderTraversal(node.left);
-			postOrderTraversal(node.right);
-			System.out.print(node.data + " ");
+			post_order(node.left, message);
+			post_order(node.right, message);
+			message.append(node.data).append("->");
 		}
 	}
 
@@ -111,13 +163,25 @@ class BinaryTree<T extends Comparable<T>> {
 
 	private int getDegree(Node<T> node) {
 		if (node == null) {
-			return 0;
-		}
+            return 0;
+        }
 
-		int leftDegree = getDegree(node.left);
-		int rightDegree = getDegree(node.right);
+        // Verificamos el número de hijos del nodo actual.
+        int gradoNodo = 0;
 
-		return Math.max(leftDegree, rightDegree) + 1;
+        if (node.left != null) {
+            gradoNodo++;
+        }
+        if (node.right != null) {
+            gradoNodo++;
+        }
+
+        // Llamamos recursivamente a los hijos izquierdo y derecho.
+        int gradoIzquierdo = getDegree(node.left);
+        int gradoDerecho = getDegree(node.right);
+
+        // El grado del nodo actual es el máximo entre su propio grado y el grado de sus hijos.
+        return Math.max(gradoNodo, Math.max(gradoIzquierdo, gradoDerecho));
 	}
 
 	public int getLevel(T data) {
@@ -157,25 +221,28 @@ class BinaryTree<T extends Comparable<T>> {
 		return Math.max(leftHeight, rightHeight) + 1;
 	}
 
-	public void breadthFirstSearch() {
-		if (root == null) {
-			return;
+	public boolean breadthFirstSearch(T data) {
+		if (root != null) {
+			Queue<Node<T>> cola = new LinkedList<>();
+			cola.add(root);
+
+			while (!cola.isEmpty()) {
+				Node<T> node = cola.poll();
+
+				if (node.data.equals(data)) {
+					return true;
+				}
+
+				if (node.left != null) {
+					cola.add(node.left);
+				}
+
+				if (node.right != null) {
+					cola.add(node.right);
+				}
+			}
 		}
 
-		Queue<Node<T>> queue = new LinkedList<>();
-		queue.add(root);
-
-		while (!queue.isEmpty()) {
-			Node<T> node = queue.poll();
-			System.out.print(node.data + " ");
-
-			if (node.left != null) {
-				queue.add(node.left);
-			}
-
-			if (node.right != null) {
-				queue.add(node.right);
-			}
-		}
+		return false;
 	}
 }

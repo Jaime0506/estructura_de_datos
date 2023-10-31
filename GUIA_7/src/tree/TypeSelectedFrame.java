@@ -36,9 +36,9 @@ public class TypeSelectedFrame extends JFrame {
 
                 if ("Números".equals(selectedOption)) {
                     // Crear un TreeFrame con números
-//                    TreeFrame<Integer> treeFrame = new TreeFrame<>();
-//                    treeFrame.setTree(new BinaryTree<Integer>());
-//                    treeFrame.setVisible(true);
+                    TreeFrameNumbers treeFrame = new TreeFrameNumbers();
+                    
+                    treeFrame.setVisible(true);
                 } else if ("Cadenas".equals(selectedOption)) {
                     // Crear un TreeFrame con cadenas
                     TreeFrameString treeFrame = new TreeFrameString();
