@@ -5,7 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import java.awt.Canvas;
+
 import java.awt.Font;
 import java.awt.Panel;
 import java.awt.Color;
@@ -65,6 +65,10 @@ public class TreeFrame extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
+		JLabel lblText = new JLabel("");
+		lblText.setBounds(749, 11, 319, 223);
+		panel.add(lblText); 
+		
 		JButton btnNewButton = new JButton("INSERTAR NODO");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -85,27 +89,68 @@ public class TreeFrame extends JFrame {
 		panel.add(btnNewButton);
 		
 		JButton btnBuscarNodo = new JButton("BUSCAR NODO");
+		btnBuscarNodo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					int value = Integer.parseInt((JOptionPane.showInputDialog(contentPane, "Indique el valor del nodo a buscar"))); 
+					tree.findNodeByValue(value); 
+
+				} catch (Exception e2) {
+					// TODO: handle exception
+					JOptionPane.showMessageDialog(contentPane,
+							"El valor ingresado es texto, por favor indique unicamente numerico");
+				}
+			}
+		});
 		btnBuscarNodo.setBounds(10, 92, 347, 58);
 		panel.add(btnBuscarNodo);
 		
-		JButton btnBuscarNodo_1 = new JButton("BUSCAR NODO");
+		JButton btnBuscarNodo_1 = new JButton("ELIMINAR NODO");
+		btnBuscarNodo_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try { 
+					int value = Integer.parseInt((JOptionPane.showInputDialog(contentPane, "Indique el valor del nodo a eliminar")));
+
+					tree.deleteNodeByValue(value);
+					canvas.setTree(tree);
+					canvas.repaint(); 
+				} catch (Exception e2) {
+					// TODO: handle exception
+					JOptionPane.showMessageDialog(contentPane,
+							"El valor ingresado es texto, por favor indique unicamente numerico");
+				}
+			}
+		});
 		btnBuscarNodo_1.setBounds(10, 176, 347, 58);
 		panel.add(btnBuscarNodo_1);
 		
 		JButton btnInorden = new JButton("IN_ORDEN");
+		btnInorden.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lblText.setText(tree.in_order());
+			}
+		});
 		btnInorden.setBounds(386, 11, 347, 58);
 		panel.add(btnInorden);
 		
 		JButton btnPreorden = new JButton("PRE_ORDEN");
+		btnPreorden.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lblText.setText(tree.pre_order());
+			}
+		});
 		btnPreorden.setBounds(386, 92, 347, 58);
 		panel.add(btnPreorden);
 		
 		JButton btnPostorden = new JButton("POST_ORDEN");
+		btnPostorden.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lblText.setText(tree.post_order());
+			}
+		});
 		btnPostorden.setBounds(386, 176, 347, 58);
 		panel.add(btnPostorden);
 		
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setBounds(749, 11, 319, 223);
-		panel.add(lblNewLabel);
+		
 	}
 }

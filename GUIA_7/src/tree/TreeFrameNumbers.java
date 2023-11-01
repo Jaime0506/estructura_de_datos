@@ -5,7 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import java.awt.Canvas;
+
 import java.awt.Font;
 import java.awt.Panel;
 import java.awt.Color;
@@ -103,7 +103,7 @@ public class TreeFrameNumbers extends JFrame {
 				} catch (Exception e2) {
 					// TODO: handle exception
 					JOptionPane.showMessageDialog(contentPane,
-							"El valor ingresado es numerico, por favor indique unicamente Texto");
+							"El valor ingresado es texto, por favor indique unicamente numerico");
 				}
 			}
 		});
@@ -127,7 +127,7 @@ public class TreeFrameNumbers extends JFrame {
 				} catch (Exception e2) {
 					// TODO: handle exception
 					JOptionPane.showMessageDialog(contentPane,
-							"El valor ingresado es numerico, por favor indique unicamente Texto");
+							"El valor ingresado es texto, por favor indique unicamente numerico");
 				}
 			}
 		});
@@ -187,7 +187,7 @@ public class TreeFrameNumbers extends JFrame {
 				} catch (Exception e2) {
 					// TODO: handle exception
 					JOptionPane.showMessageDialog(contentPane,
-							"El valor ingresado es numerico, por favor indique unicamente Texto");
+							"El valor ingresado es texto, por favor indique unicamente numerico");
 				}
 				
 			}
