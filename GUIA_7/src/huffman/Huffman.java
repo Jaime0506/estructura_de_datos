@@ -9,7 +9,7 @@ import java.util.PriorityQueue;
 
 class Huffman {
 	// Atraviesa el árbol de Huffman y almacena los códigos de Huffman en un mapa.
-	public static void encode(Node root, String str, Map<Character, String> huffmanCode) {
+	public void encode(Node root, String str, Map<Character, String> huffmanCode) {
 		if (root == null) {
 			return;
 		}
@@ -24,7 +24,7 @@ class Huffman {
 	}
 
 	// Atraviesa el árbol de Huffman y decodifica la string codificada
-	public static int decode(Node root, int index, StringBuilder sb) {
+	public int decode(Node root, int index, StringBuilder sb) {
 		if (root == null) {
 			return index;
 		}
@@ -43,18 +43,18 @@ class Huffman {
 	}
 
 	// Función de utilidad para verificar si Huffman Tree contiene solo un solo nodo
-	public static boolean isLeaf(Node root) {
+	public boolean isLeaf(Node root) {
 		return root.left == null && root.right == null;
 	}
 
 	// Construye Huffman Tree y decodifica el texto de entrada dado
-	public static void buildHuffmanTree(String text) {
+	public String buildHuffmanTree(String text) {
 		// Caso base: string vacía
 		if (text == null || text.length() == 0) {
-			return;
+			return "";
 		}
 
-		// Contar la frecuencia de aparición de cada personaje
+		// Contar la frecuencia de aparición de cada letra
 		// y almacenarlo en un mapa
 
 		Map<Character, Integer> freq = new HashMap<>();
@@ -124,11 +124,15 @@ class Huffman {
 				index = decode(root, index, sb);
 			}
 		}
+		
+		return sb.toString();
 	}
 
 	// Implementación del algoritmo de codificación de Huffman en Java
 	public static void main(String[] args) {
 		String text = "Hola";
-		buildHuffmanTree(text);
+		
+		Huffman huffman = new Huffman(); 
+		huffman.buildHuffmanTree(text);
 	}
 }
