@@ -1,13 +1,12 @@
+import java.util.List;
+import java.util.Map;
+
 import javax.swing.JFrame;
 
 public class Main {
-    public static void main(String[] args) {
-    	JFrame frame = new JFrame("Grafo Visual");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1080, 1080);
-
-        Grafo grafo = new Grafo(); 
-
+	static Grafo grafo = new Grafo(); 
+	
+	static void agregarDatos() { 
         grafo.agregarVertice("UMB");
         grafo.agregarVertice("Simon Bolivar");
         grafo.agregarVertice("Nacional");
@@ -80,8 +79,39 @@ public class Main {
         grafo.agregarArista("Independencia", "San jose de bavaria", 18.6);
         
         // Regional la Florida
-        grafo.agregarArista("Regional la Florida", "San jose de bavaria", 10.8);
+        grafo.agregarArista("Regional la Florida", "San jose de bavaria", 10.8); 
+	}
+
+    public static void main(String[] args) {
+    	agregarDatos();
+    	
+    	JFrame frame = new JFrame("Grafo Visual");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(1080, 1080);
+
         
+        // Funcionalidades necesarias
+        
+//        4.	Elabore la matriz correspondiente para representar los nodos y distancias del tema seleccionado y muéstrela por pantalla. ✅
+//
+//        5.	Represente el Grafo de manera gráfica, (Dibújelo en la pantalla)✅
+//
+//        6.	Busque en la guía y en libro del curso e implemente en el lenguaje de programación Java, el código del algoritmo Dijkstra para hallar la ruta más corta. Plantee un ejemplo dentro de su código de mínimo 10 nodos y 30 aristas.
+//
+//        7.	Busque en la guía y en el libro del e implemente en el lenguaje de programación Java, el código de los algoritmos de Prim, Floyd Warshall. La implementación debe ser sobre el mismo proyecto(Sesión 1) que ha venido trabajando con grafos. 
+
+        grafo.mostrarNombresVertices();
+        grafo.mostrarMatrizAdyacencia(); 
+        grafo.mostrarMatrizAdyacenciaConPeso();
+
+        System.out.println("");
+        System.out.println("_______________________________");
+        System.out.println("Algoritmo de dijkstra");
+        System.out.println("-------------------------------");
+        System.out.println();
+
+        grafo.mostrarDijkstra("93");
+       
 
         GrafoCanvas canvas = new GrafoCanvas(grafo);
         frame.add(canvas);
