@@ -1,3 +1,4 @@
+package Exercise_1;
 import java.util.List;
 import java.util.Map;
 
@@ -98,23 +99,19 @@ public class Main {
 //
 //        6.	Busque en la guía y en libro del curso e implemente en el lenguaje de programación Java, el código del algoritmo Dijkstra para hallar la ruta más corta. Plantee un ejemplo dentro de su código de mínimo 10 nodos y 30 aristas.
 //
-//        7.	Busque en la guía y en el libro del e implemente en el lenguaje de programación Java, el código de los algoritmos de Prim, Floyd Warshall. La implementación debe ser sobre el mismo proyecto(Sesión 1) que ha venido trabajando con grafos. 
+//        7.	Busque en la guía y en el libro del e implemente en el lenguaje de programación Java, el código de los algoritmos de Prim, Floyd Warshall. La implementación debe ser sobre el mismo proyecto(Sesión 1) que ha venido trabajando con grafos. ✅
 
-        grafo.mostrarNombresVertices();
-        grafo.mostrarMatrizAdyacencia(); 
-        grafo.mostrarMatrizAdyacenciaConPeso();
+//        grafo.mostrarNombresVertices();
+//        grafo.mostrarMatrizAdyacencia(); 
+//        grafo.mostrarMatrizAdyacenciaConPeso();
 
-        System.out.println("");
-        System.out.println("_______________________________");
-        System.out.println("Algoritmo de dijkstra");
-        System.out.println("-------------------------------");
-        System.out.println();
-
-        grafo.mostrarDijkstra("93");
-       
 
         GrafoCanvas canvas = new GrafoCanvas(grafo);
         frame.add(canvas);
         frame.setVisible(true);
+        
+//        grafo.mostrarDijkstra("93");
+//        grafo.mostrarPrim();
+        grafo.floydWarshall(); 
     }
 }
