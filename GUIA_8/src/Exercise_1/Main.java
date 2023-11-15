@@ -90,28 +90,20 @@ public class Main {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1080, 1080);
 
-        
-        // Funcionalidades necesarias
-        
-//        4.	Elabore la matriz correspondiente para representar los nodos y distancias del tema seleccionado y muéstrela por pantalla. ✅
-//
-//        5.	Represente el Grafo de manera gráfica, (Dibújelo en la pantalla)✅
-//
-//        6.	Busque en la guía y en libro del curso e implemente en el lenguaje de programación Java, el código del algoritmo Dijkstra para hallar la ruta más corta. Plantee un ejemplo dentro de su código de mínimo 10 nodos y 30 aristas.
-//
-//        7.	Busque en la guía y en el libro del e implemente en el lenguaje de programación Java, el código de los algoritmos de Prim, Floyd Warshall. La implementación debe ser sobre el mismo proyecto(Sesión 1) que ha venido trabajando con grafos. ✅
 
-//        grafo.mostrarNombresVertices();
-//        grafo.mostrarMatrizAdyacencia(); 
-//        grafo.mostrarMatrizAdyacenciaConPeso();
+        grafo.mostrarNombresVertices();
+        grafo.mostrarMatrizAdyacencia(); 
+
+		grafo.mostrarNombresVertices();
+        grafo.mostrarMatrizAdyacenciaConPeso();
 
 
         GrafoCanvas canvas = new GrafoCanvas(grafo);
         frame.add(canvas);
         frame.setVisible(true);
         
-//        grafo.mostrarDijkstra("93");
-//        grafo.mostrarPrim();
+        grafo.mostrarDijkstra("93");
+        grafo.mostrarPrim();
         grafo.floydWarshall(); 
     }
 }

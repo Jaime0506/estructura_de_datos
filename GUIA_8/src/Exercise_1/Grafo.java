@@ -298,10 +298,16 @@ class Grafo {
 
         DecimalFormat df = new DecimalFormat("#.##");
         
+        System.out.println("");
+		System.out.println("_______________________________");
+		System.out.println("Algoritmo de Floyd Warshall");
+		System.out.println("-------------------------------");
+		System.out.println();
+        
         // Imprimir las distancias mínimas entre todos los pares de vértices
         for (int i = 0; i < numVertices; i++) {
             for (int j = 0; j < numVertices; j++) {
-                System.out.print(df.format(distancias[i][j]) + " ");
+                System.out.printf("%-3s", df.format(distancias[i][j]) + " | ");
             }
             System.out.println();
         }

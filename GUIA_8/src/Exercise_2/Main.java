@@ -57,7 +57,9 @@ static Grafo grafo = new Grafo();
         frame.setVisible(true); 
         
         grafo.mostrarListaAdyacencia();
-        grafo.mostrarCaminoMasCorto("1", "9");
-        grafo.mostrarCaminoMasLargo("1", "9");
+        grafo.mostrarCaminoMasCorto("1", "9"); 
+        grafo.mostrarCaminoMasLargo(); 
+        
+        grafo.floydWarshall();
     }
 }
